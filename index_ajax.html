@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hola Soy Sebas</h1>
+    <ul id="listica-para-mis-estudiantes">
+    </ul>
+    <button onclick="llenarLista()">Haz click</button>
+    <script>
+        function llenarLista() {
+            const lista = document.getElementById('listica-para-mis-estudiantes');
+            
+
+            fetch("http://localhost:3002/products", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = `${item.name} - $${item.price}`;
+                    lista.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+
+            
+        }
+        
+        function saludar() {
+            alert('¡Hola, Sebas!');
+        }
+    </script>
+</body>
+</html>
