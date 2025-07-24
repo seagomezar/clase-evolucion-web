@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React SPA Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2196F3;
+        }
+        .product-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .product-item {
+            background: #f5f5f5;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #2196F3;
+        }
+        .button {
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        .button:hover {
+            background-color: #1976D2;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: #f44336;
+            background: #ffebee;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- React and ReactDOM from CDN for simplicity -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX transformation -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Our React App -->
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Product component
+        function Product({ product }) {
+            return (
+                <li className="product-item">
+                    <strong>{product.name}</strong> - ${product.price}
+                    <br />
+                    <small>ID: {product.id}</small>
+                </li>
+            );
+        }
+
+        // ProductList component
+        function ProductList() {
+            const [products, setProducts] = useState([]);
+            const [loading, setLoading] = useState(false);
+            const [error, setError] = useState(null);
+
+            const fetchProducts = async () => {
+                setLoading(true);
+                setError(null);
+                try {
+                    const response = await fetch('http://localhost:3003/products');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    setProducts(data);
+                } catch (err) {
+                    setError(`Error loading products: ${err.message}`);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            const clearProducts = () => {
+                setProducts([]);
+                setError(null);
+            };
+
+            return (
+                <div>
+                    <h1>React SPA - Lista de Productos</h1>
+                    <p>Este es un ejemplo simple de una Single Page Application construida con React.</p>
+                    
+                    <div>
+                        <button className="button" onClick={fetchProducts} disabled={loading}>
+                            {loading ? 'Cargando...' : 'Cargar Productos'}
+                        </button>
+                        <button className="button" onClick={clearProducts}>
+                            Limpiar Lista
+                        </button>
+                    </div>
+
+                    {error && <div className="error">{error}</div>}
+                    
+                    {loading && <p className="loading">Cargando productos...</p>}
+                    
+                    {products.length > 0 && (
+                        <div>
+                            <h2>Productos ({products.length})</h2>
+                            <ul className="product-list">
+                                {products.map(product => (
+                                    <Product key={product.id} product={product} />
+                                ))}
+                            </ul>
+                        </div>
+                    )}
+                    
+                    {!loading && products.length === 0 && !error && (
+                        <p>No hay productos cargados. Haz clic en "Cargar Productos" para obtener datos del servidor.</p>
+                    )}
+                </div>
+            );
+        }
+
+        // Main App component
+        function App() {
+            return (
+                <div>
+                    <ProductList />
+                    <hr />
+                    <footer>
+                        <p><strong>Características de esta SPA React:</strong></p>
+                        <ul>
+                            <li>✅ Componentes reutilizables</li>
+                            <li>✅ Estado local con React Hooks</li>
+                            <li>✅ Manejo de efectos secundarios</li>
+                            <li>✅ Manejo de errores</li>
+                            <li>✅ Indicadores de carga</li>
+                            <li>✅ Interfaz reactiva</li>
+                        </ul>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

@@ -27,6 +27,11 @@ const server = http.createServer((req, res) => {
     </ul>
     <button onclick="saludar()">Haz click</button>
     
+    <script>
+        function saludar() {
+            alert('¡Hola, Sebas!');
+        }
+    </script>
 </body>
 </html>`);
 });

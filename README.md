@@ -16,124 +16,96 @@ Each approach represents a significant milestone in web development history and 
 
 ```
 clase-evolucion-web/
-├── README.md                 # This file
-├── styles.css               # Shared CSS styles
+├── README.md                    # This file - overview and navigation guide
 │
-├── Static Website Examples:
-├── index.html               # Basic static HTML page
-├── about.html               # Additional static page
+├── 01-static/                   # Static Websites
+│   ├── README.md               # Static web concepts and instructions
+│   ├── index.html              # Basic static HTML page
+│   ├── about.html              # Additional static page
+│   └── styles.css              # Shared CSS styles
 │
-├── Server-Side Rendering Examples:
-├── server.js                # Basic file server (port 80)
-├── server2.js               # Dynamic HTML generation (port 3001)
+├── 02-ssr/                     # Server-Side Rendering
+│   ├── README.md               # SSR concepts and instructions
+│   ├── server.js               # Basic file server (port 80)
+│   ├── server2.js              # Dynamic HTML generation (port 3001)
+│   └── styles.css              # Shared CSS styles
 │
-└── Single-Page Application Examples:
-    ├── index_ajax.html      # SPA client with AJAX functionality
-    └── server3.js           # API server for JSON data (port 3002)
+├── 03-spa/                     # Single-Page Application (Vanilla)
+│   ├── README.md               # SPA concepts and instructions
+│   ├── index_ajax.html         # SPA client with AJAX functionality
+│   └── server3.js              # API server for JSON data (port 3002)
+│
+└── 04-react-spa/               # Modern React SPA
+    ├── README.md               # React SPA setup and instructions
+    ├── index.html              # React application
+    ├── server.js               # API server with CORS (port 3003)
+    ├── package.json            # Project dependencies
+    └── node_modules/           # React dependencies (after npm install)
 ```
 
 ## 🚀 Examples and Use Cases
 
-### 1. Static Websites
+Each folder contains a complete example with its own README.md file explaining concepts, setup, and usage instructions.
 
-**Files:** `index.html`, `about.html`, `styles.css`
+### 1. Static Websites (`01-static/`)
 
-This represents the earliest form of web development where content is fixed and the same for all users.
+The foundation of web development - simple HTML pages with basic interactivity.
 
-**Characteristics:**
-- Content is written directly in HTML
-- No server-side processing required
-- Fast loading and simple to deploy
-- Limited interactivity (only client-side JavaScript)
-
-**How to run:**
+**Quick start:**
 ```bash
-# Option 1: Open directly in browser
-open index.html
-
-# Option 2: Use a simple HTTP server
-python3 -m http.server 8000
-# Then visit http://localhost:8000
+cd 01-static
+# See README.md for detailed instructions
 ```
 
-**What you'll see:**
-- A simple page with a heading, list, and button
-- Clicking the button shows a JavaScript alert
-- Basic blue styling applied to the heading
+### 2. Server-Side Rendering (`02-ssr/`)
 
-### 2. Server-Side Rendering (SSR)
+Dynamic content generation on the server before sending to the client.
 
-**Files:** `server.js`, `server2.js`
-
-This approach generates HTML content on the server before sending it to the client.
-
-#### Example 1: Basic File Server (`server.js`)
-- Serves static HTML files from the server
-- Demonstrates basic Node.js HTTP server
-- Runs on port 80
-
+**Quick start:**
 ```bash
-# Run the server
-node server.js
-
-# Visit http://localhost (port 80)
+cd 02-ssr
+node server2.js  # Visit http://localhost:3001
+# See README.md for both server examples
 ```
 
-#### Example 2: Dynamic Content Generation (`server2.js`)
-- Generates HTML dynamically using JavaScript template strings
-- Embeds product data directly into the HTML
-- Demonstrates server-side data injection
-- Runs on port 3001
+### 3. Single-Page Application - Vanilla (`03-spa/`)
 
+Modern approach with asynchronous data loading without page refreshes.
+
+**Quick start:**
 ```bash
-# Run the server
-node server2.js
-
-# Visit http://localhost:3001
-```
-
-**What you'll see:**
-- The same visual result as the static version
-- But the product list is now generated dynamically on the server
-- Each page load could potentially show different data
-
-### 3. Single-Page Applications (SPAs)
-
-**Files:** `index_ajax.html`, `server3.js`
-
-This modern approach loads data dynamically without full page refreshes.
-
-**How to run:**
-```bash
-# Start the API server
+# Terminal 1: Start API server
+cd 03-spa
 node server3.js
 
-# In another terminal, serve the HTML file
+# Terminal 2: Serve HTML
 python3 -m http.server 8080
-
 # Visit http://localhost:8080/index_ajax.html
 ```
 
-**What you'll see:**
-- Initially, the page loads with an empty list
-- Clicking the button fetches product data via AJAX
-- The list populates without a page refresh
-- This demonstrates asynchronous data loading
+### 4. React Single-Page Application (`04-react-spa/`)
 
-**API Endpoints:**
-- `GET http://localhost:3002/products` - Returns JSON array of products
-- `GET http://localhost:3002/hola` - Serves the AJAX HTML page
+Modern React-based SPA demonstrating component architecture and hooks.
+
+**Quick start:**
+```bash
+cd 04-react-spa
+npm install  # Install dependencies
+npm start    # Visit http://localhost:3003
+```
 
 ## 🔄 Evolution Comparison
 
-| Aspect | Static | SSR | SPA |
-|--------|---------|-----|-----|
-| **Data Loading** | Hardcoded in HTML | Generated on server | Fetched via API |
-| **Page Updates** | Full page reload | Full page reload | Partial updates |
-| **Server Load** | Minimal | Moderate | Low (after initial load) |
-| **User Experience** | Basic | Good | Excellent |
-| **Complexity** | Low | Medium | High |
-| **SEO Friendliness** | Excellent | Excellent | Requires extra work |
+| Aspect | Static | SSR | SPA (Vanilla) | SPA (React) |
+|--------|---------|-----|---------------|-------------|
+| **Data Loading** | Hardcoded in HTML | Generated on server | Fetched via API | Component state + API |
+| **Page Updates** | Full page reload | Full page reload | Partial updates | Reactive updates |
+| **Server Load** | Minimal | Moderate | Low (after initial) | Low (after initial) |
+| **User Experience** | Basic | Good | Excellent | Excellent |
+| **Complexity** | Low | Medium | High | High |
+| **Maintainability** | Low | Medium | Medium | High |
+| **Component Reuse** | None | None | Limited | High |
+| **SEO Friendliness** | Excellent | Excellent | Requires extra work | Requires extra work |
 
 ## 💡 Suggestions for Repository Enhancement
 
@@ -195,24 +167,35 @@ python3 -m http.server 8080
 
 ## 🎓 Learning Path for Students
 
-1. **Start with static examples** - Understand basic HTML, CSS, and JavaScript
-2. **Progress to SSR** - Learn about servers and dynamic content generation
-3. **Advance to SPAs** - Understand asynchronous programming and APIs
-4. **Explore modern frameworks** - Apply concepts to real-world tools
+1. **Start with static examples** (`01-static/`) - Understand basic HTML, CSS, and JavaScript
+2. **Progress to SSR** (`02-ssr/`) - Learn about servers and dynamic content generation
+3. **Advance to vanilla SPAs** (`03-spa/`) - Understand asynchronous programming and APIs
+4. **Master React SPAs** (`04-react-spa/`) - Learn modern component-based architecture
+5. **Explore modern frameworks** - Apply concepts to production-ready tools
 
 ## 🛠 Prerequisites
 
 - Basic understanding of HTML, CSS, and JavaScript
-- Node.js installed on your system
+- Node.js installed on your system (for examples 2, 3, and 4)
 - A web browser with developer tools
 - Basic command line knowledge
+- Text editor or IDE
 
 ## 📚 Additional Resources
 
 - [MDN Web Docs](https://developer.mozilla.org/) - Comprehensive web development documentation
 - [Node.js Documentation](https://nodejs.org/docs/) - Server-side JavaScript
 - [JavaScript.info](https://javascript.info/) - Modern JavaScript tutorial
+- [React Documentation](https://react.dev/) - Official React guide
+- [React Tutorial](https://react.dev/learn) - Interactive React learning
 
 ---
 
 This repository serves as a practical introduction to web development evolution. Each example builds upon previous concepts while introducing new paradigms that have shaped modern web development.
+
+## 🗂 Navigation Guide
+
+- Browse each numbered folder in sequence to follow the evolution
+- Read each folder's README.md for detailed setup and learning objectives  
+- Each example is self-contained and can be run independently
+- Use this repository for educational purposes and hands-on learning
